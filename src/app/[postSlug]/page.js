@@ -5,6 +5,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import BlogHero from '@/components/BlogHero';
 import CodeSnippet from '@/components/CodeSnippet';
 import DivisionGroupsDemo from '@/components/LazyDivisionGroupsDemo';
+import CircularColorsDemo from '@/components/CircularColorsDemo';
 // import Spinner from '@/components/Spinner';
 
 import { loadBlogPost } from '@/helpers/file-helpers';
@@ -36,6 +37,7 @@ async function BlogPost({ params: { postSlug } }) {
 					components={{
 						pre: CodeSnippet,
 						DivisionGroupsDemo,
+						CircularColorsDemo,
 					}}
 				/>
 			</div>
