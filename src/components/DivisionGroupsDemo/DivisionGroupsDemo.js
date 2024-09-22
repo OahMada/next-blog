@@ -51,7 +51,9 @@ function DivisionGroupsDemo({ numOfItems = 12, initialNumOfGroups = 1, includeRe
 						{range(numOfGroups).map((groupIndex) => (
 							<motion.div key={groupIndex} className={styles.group} layout={true}>
 								{range(numOfItemsPerGroup).map((index) => {
-									let layoutId = `${id}-${index + numOfItemsPerGroup * groupIndex}`;
+									// to make sure that the circles in remainder area stack on the right side
+									let reverseIndexStarter = numOfGroups * numOfItemsPerGroup - 1;
+									let layoutId = `${id}-${reverseIndexStarter - (index + numOfItemsPerGroup * groupIndex)}`;
 									return <motion.div key={layoutId} className={styles.item} layoutId={layoutId} />;
 								})}
 							</motion.div>
@@ -62,9 +64,11 @@ function DivisionGroupsDemo({ numOfItems = 12, initialNumOfGroups = 1, includeRe
 				{includeRemainderArea && (
 					<div className={styles.remainderArea}>
 						<p className={styles.remainderHeading}>Remainder Area</p>
-
 						{range(remainder).map((index) => {
-							return <div key={index} className={styles.item} />;
+							// to make sure that the circles in remainder area stack on the right side
+							let reverseIndexStarter = numOfGroups * numOfItemsPerGroup + remainder - 1;
+							let layoutId = `${id}-${reverseIndexStarter - index}`;
+							return <motion.div key={layoutId} className={styles.item} layoutId={layoutId} />;
 						})}
 					</div>
 				)}
