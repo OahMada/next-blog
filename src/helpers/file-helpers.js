@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import React from 'react';
 
 export async function getBlogPostList() {
+	// no need to use React.cache ?
 	const fileNames = await readDirectory('/content');
 
 	const blogPosts = [];

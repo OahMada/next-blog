@@ -4,6 +4,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { Rss, Sun, Moon } from 'react-feather';
 import Cookie from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 import Logo from '@/components/Logo';
 import VisuallyHidden from '@/components/VisuallyHidden';
@@ -13,6 +14,7 @@ import styles from './Header.module.css';
 
 function Header({ theme, className, ...delegated }) {
 	let [colorTheme, setColorTheme] = React.useState(theme);
+	let router = useRouter();
 
 	function handleChangeColorTheme() {
 		let nextTheme = colorTheme === 'light' ? 'dark' : 'light';
@@ -34,7 +36,12 @@ function Header({ theme, className, ...delegated }) {
 			<Logo />
 
 			<div className={styles.actions}>
-				<button className={styles.action}>
+				<button
+					className={styles.action}
+					onClick={() => {
+						router.push('/rss.xml');
+					}}
+				>
 					<Rss
 						size='1.5rem'
 						style={{
