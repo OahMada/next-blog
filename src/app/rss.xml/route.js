@@ -27,3 +27,6 @@ export async function GET() {
 		headers: { 'Content-Type': 'application/xml' },
 	});
 }
+
+// TODO how about the first potential direction?
+// TODO auto applied 'px' unit?

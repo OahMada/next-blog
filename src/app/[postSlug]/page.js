@@ -1,6 +1,7 @@
 import React from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 // import dynamic from 'next/dynamic';
+import { notFound } from 'next/navigation';
 
 import BlogHero from '@/components/BlogHero';
 import CodeSnippet from '@/components/CodeSnippet';
@@ -13,17 +14,6 @@ import { loadBlogPost } from '@/helpers/file-helpers';
 import styles from './postSlug.module.css';
 
 // var DivisionGroupsDemo = dynamic(() => import('@/components/DivisionGroupsDemo'), { loading: Spinner });
-
-export async function generateMetadata({ params: { postSlug } }) {
-	let {
-		frontmatter: { title, abstract },
-	} = await loadBlogPost(postSlug);
-
-	return {
-		title: `${title} • Bits & Bytes`,
-		description: abstract,
-	};
-}
 
 async function BlogPost({ params: { postSlug } }) {
 	let { content: postContent } = await loadBlogPost(postSlug);
@@ -43,6 +33,20 @@ async function BlogPost({ params: { postSlug } }) {
 			</div>
 		</article>
 	);
+}
+
+export async function generateMetadata({ params: { postSlug } }) {
+	try {
+		let {
+			frontmatter: { title, abstract },
+		} = await loadBlogPost(postSlug);
+		return {
+			title: `${title} • Bits & Bytes`,
+			description: abstract,
+		};
+	} catch (error) {
+		notFound();
+	}
 }
 
 export default BlogPost;
