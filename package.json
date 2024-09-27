@@ -8,7 +8,8 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"new-component": "new-component"
+		"new-component": "new-component",
+		"analyze": "ANALYZE=true npm run build"
 	},
 	"dependencies": {
 		"bright": "0.8.5",
@@ -26,5 +27,8 @@
 		"react-dom": "18.3.1",
 		"react-feather": "2.0.10",
 		"rss": "^1.2.2"
+	},
+	"devDependencies": {
+		"@next/bundle-analyzer": "^14.2.13"
 	}
 }
