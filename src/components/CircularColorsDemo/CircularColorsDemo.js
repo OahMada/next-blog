@@ -27,7 +27,7 @@ function CircularColorsDemo() {
 			return;
 		}
 		let intervalId = window.setInterval(() => {
-			setTimeElapsed((oldState) => (oldState += 1));
+			setTimeElapsed((oldState) => oldState + 1);
 		}, 1000);
 		return () => {
 			window.clearInterval(intervalId);

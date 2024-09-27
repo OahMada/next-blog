@@ -3,7 +3,7 @@ import { Work_Sans, Spline_Sans_Mono } from 'next/font/google';
 import clsx from 'clsx';
 import { cookies } from 'next/headers';
 
-import { LIGHT_TOKENS, DARK_TOKENS, BLOG_TITLE } from '@/constants';
+import { LIGHT_TOKENS, DARK_TOKENS, BLOG_TITLE, COLOR_THEME_COOKIE, BLOG_DESCRIPTION } from '@/constants';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -12,7 +12,7 @@ import './styles.css';
 
 export var metadata = {
 	title: BLOG_TITLE,
-	description: 'A wonderful blog about JavaScript',
+	description: BLOG_DESCRIPTION,
 };
 
 const mainFont = Work_Sans({
@@ -29,7 +29,7 @@ const monoFont = Spline_Sans_Mono({
 });
 
 function RootLayout({ children }) {
-	let savedTheme = cookies().get('color-theme');
+	let savedTheme = cookies().get(COLOR_THEME_COOKIE);
 	const theme = savedTheme?.value || 'light';
 
 	return (

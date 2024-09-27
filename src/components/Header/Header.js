@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 
 import Logo from '@/components/Logo';
 import VisuallyHidden from '@/components/VisuallyHidden';
-import { LIGHT_TOKENS, DARK_TOKENS } from '@/constants';
+import { LIGHT_TOKENS, DARK_TOKENS, COLOR_THEME_COOKIE } from '@/constants';
 
 import styles from './Header.module.css';
 
@@ -20,7 +20,7 @@ function Header({ theme, className, ...delegated }) {
 		let nextTheme = colorTheme === 'light' ? 'dark' : 'light';
 		setColorTheme(nextTheme);
 
-		Cookie.set('color-theme', nextTheme);
+		Cookie.set(COLOR_THEME_COOKIE, nextTheme);
 
 		let root = document.documentElement;
 		let colors = nextTheme === 'light' ? LIGHT_TOKENS : DARK_TOKENS;

@@ -4,11 +4,9 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
 
 import BlogHero from '@/components/BlogHero';
-import CodeSnippet from '@/components/CodeSnippet';
-import DivisionGroupsDemo from '@/components/LazyDivisionGroupsDemo';
-import CircularColorsDemo from '@/components/CircularColorsDemo';
 // import Spinner from '@/components/Spinner';
-
+import { BLOG_TITLE } from '@/constants';
+import COMPONENT_MAP from '@/helpers/mdx-components';
 import { loadBlogPost } from '@/helpers/file-helpers';
 
 import styles from './postSlug.module.css';
@@ -16,37 +14,40 @@ import styles from './postSlug.module.css';
 // var DivisionGroupsDemo = dynamic(() => import('@/components/DivisionGroupsDemo'), { loading: Spinner });
 
 async function BlogPost({ params: { postSlug } }) {
-	let { content: postContent } = await loadBlogPost(postSlug);
+	let blogPostData = await loadBlogPost(postSlug);
+	if (!blogPostData) {
+		notFound();
+	}
+
+	let {
+		frontmatter: { title, publishedOn },
+		content,
+	} = blogPostData;
 
 	return (
 		<article className={styles.wrapper}>
-			<BlogHero title='Example post!' publishedOn={new Date()} />
+			<BlogHero title={title} publishedOn={publishedOn} />
 			<div className={styles.page}>
-				<MDXRemote
-					source={postContent}
-					components={{
-						pre: CodeSnippet,
-						DivisionGroupsDemo,
-						CircularColorsDemo,
-					}}
-				/>
+				<MDXRemote source={content} components={COMPONENT_MAP} />
 			</div>
 		</article>
 	);
 }
 
 export async function generateMetadata({ params: { postSlug } }) {
-	try {
-		let {
-			frontmatter: { title, abstract },
-		} = await loadBlogPost(postSlug);
-		return {
-			title: `${title} • Bits & Bytes`,
-			description: abstract,
-		};
-	} catch (error) {
-		notFound();
+	let blogPostData = await loadBlogPost(postSlug);
+	if (!blogPostData) {
+		return null;
 	}
+
+	let {
+		frontmatter: { title, abstract },
+	} = blogPostData;
+
+	return {
+		title: `${title} • ${BLOG_TITLE}`,
+		description: abstract,
+	};
 }
 
 export default BlogPost;

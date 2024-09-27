@@ -4,7 +4,10 @@ import matter from 'gray-matter';
 import React from 'react';
 
 export async function getBlogPostList() {
-	// TODO no need to use React.cache ?
+	// no need to use React.cache ? // no
+	// TODO why two logs when opening the rss route?
+	console.log('calling getBlogPostList');
+
 	const fileNames = await readDirectory('/content');
 
 	const blogPosts = [];
@@ -24,8 +27,12 @@ export async function getBlogPostList() {
 }
 
 export var loadBlogPost = React.cache(async function (slug) {
-	const rawContent = await readFile(`/content/${slug}.mdx`);
-
+	let rawContent = '';
+	try {
+		rawContent = await readFile(`/content/${slug}.mdx`);
+	} catch (error) {
+		return null;
+	}
 	const { data: frontmatter, content } = matter(rawContent);
 
 	return { frontmatter, content };
